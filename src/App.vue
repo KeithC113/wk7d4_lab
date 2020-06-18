@@ -1,28 +1,40 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="html">
+  <div>
+    <h1>BREWDOG BEER MENU </h1>
+    <beer-filter-form :beers="beers"> </beer-filter-form>
+    <beer-detail />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BeerFilterForm from './components/BeerFilterForm.vue'
+import BeerDetail from './components/BeerDetail.vue'
 
 export default {
-  name: 'App',
+  data(){
+    return {
+      beers: [],
+    }
+  },
   components: {
-    HelloWorld
+    "beer-filter-form":BeerFilterForm,
+    "beer-detail": BeerDetail
+  },
+  mounted(){
+    fetch('https://api.punkapi.com/v2/beers')
+    .then(response => response.json())
+    .then(beers => this.beers = beers)
   }
 }
+
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style lang="css" scoped>
+
+h1{
+  font-family: New-Grotesk-Square;
+  font-weight:500;
+  color: #000;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
